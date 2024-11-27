@@ -1,0 +1,107 @@
+/* src/components/Login/Login.css */
+
+/* Reset global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Corpo da página */
+  body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+  }
+  
+  .login-page {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .left-side {
+    background-color: #169ec7; /* Fundo preto */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%; /* Lado esquerdo ocupa 50% da tela */
+    flex-direction: column;
+  }
+  
+  .left-side h1 {
+    font-size: 50px;
+  }
+  
+  .right-side {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%; /* Lado direito ocupa 50% da tela */
+  }
+  
+  .login-form {
+    width: 350px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .login-form h2 {
+    color: #169ec7; /* Azul claro */
+    margin-bottom: 10px;
+  }
+  
+  .login-form p {
+    color: #777;
+    margin-bottom: 30px;
+  }
+  
+  .input-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .input-group .icon {
+    position: absolute;
+    left: 12px;
+    top: 18px;
+    color: #169ec7;
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #169ec7; /* Cor azul escuro */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #169ec7; /* Cor mais escura para o hover */
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    display: inline-block;
+  }
+  
+  input[type="email"], input[type="password"] {
+    padding-left: 30px; /* Espaço para os ícones */
+  }
+  
