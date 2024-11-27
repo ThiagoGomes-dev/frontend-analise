@@ -1,0 +1,96 @@
+/* src/components/Sidebar/Sidebar.css */
+
+/* Estilo para o container geral */
+.container {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  position: relative;
+}
+
+.side-nav {
+  width: 257px;
+  background: linear-gradient(159.02deg, #0F123B 14.25%, #090D2E 56.45%, #020515 86.14%);
+  border-right: 2px solid rgba(42, 58, 92, 0.71);
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
+}
+
+/* Estilo do título */
+.gradient-text {
+  font-size: 14px;
+  letter-spacing: 4px;
+  padding-bottom: 35px;
+  width: 100%;
+  font-weight: bold;
+  background: linear-gradient(90deg, #FFFFFF, #808080);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  border-bottom: 1px solid gray;
+}
+
+/* Estilos para os itens do menu */
+.side-nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.side-nav li {
+  margin: 10px 0;
+}
+
+.side-nav li a {
+  width: 220px;
+  height: 53px;
+  padding-left: 10px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  text-decoration: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+/* Estilo para o ícone dentro do link */
+.side-nav li a svg {
+  margin-right: 10px; /* Adicionando espaço entre o ícone e o texto */
+  font-size: 20px; /* Ajustando o tamanho do ícone */
+}
+
+.side-nav li a:hover {
+  background-color: #0075FF;
+  color: #fff;
+}
+
+/* Estilos para a seção de Análises Contábeis */
+.nav-category-title {
+  color: white;
+  font-size: 16px;
+  padding-left: 10px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  margin: 30px 0 10px;
+  text-transform: uppercase;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  padding-bottom: 5px;
+}
+
+/* Estilos para o conteúdo principal */
+.content {
+  width: 100%;
+  padding-left: 20px;
+}
+
+.title {
+  margin-left: 30px;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
