@@ -9,16 +9,15 @@ let mockUsersList = [
     { id: 2, name: 'Arthur Martins', email: 'arthur@gmail.com', password: '123456' }, 
   ];
   
-  // Função de login - Valida o email e a senha
+  // Valida o email e a senha
   export const login = async (credentials) => {
     try {
-      // Procura o usuário na lista mockada
       const user = mockUsersList.find(u => u.email === credentials.email);
       
       if (user && user.password === credentials.password) {
         const mockLoginResponse = {
-          token: 'fake-jwt-token', // Token fictício
-          refreshToken: 'fake-refresh-token', // Refresh token fictício
+          token: 'fake-token',
+          refreshToken: 'fake-token',
           user: { id: user.id, name: user.name, email: user.email },
         };
         

@@ -1,18 +1,28 @@
 // src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Sidebar from './components/Sidebar/Sidebar';
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
+import UserList from './components/UserList/UserList';  // Gerenciar Usuários
 import './App.css';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />  {/* Aqui estamos definindo o componente Login */}
-        <Route path="/home" element={<Home />} />     {/* Aqui estamos definindo o componente Home */}
-      </Routes>
+        {/* Rota para Login */}
+        <Route path="/" element={<Login />} />
 
+        {/* Layout com Sidebar e conteúdo dinâmico */}
+        <Route element={<Sidebar />}>
+          {/* Rota para Home */}
+          <Route path="/home" element={<Home />} />
+
+          {/* Rota para Gerenciar Usuários */}
+          <Route path="/users" element={<UserList />} />
+        </Route>
+      </Routes>
     </Router>
   );
 }

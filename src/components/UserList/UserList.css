@@ -1,0 +1,64 @@
+/* UserList.css */
+.user-list-container {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .header {
+    padding-top: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  
+  .search-input {
+    padding: 10px;
+    width: 300px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .btn-cadastrar {
+    width: 200px;
+    padding: 10px 20px;
+    background-color: #286347;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .btn-cadastrar:hover {
+    background-color: #36e292;
+    color: white;
+    font-weight: bold;  
+  }
+  
+  .MuiTableCell-root {
+    padding: 10px;
+  }
+  
+  .MuiIconButton-root {
+    color: #169ec7;
+  }
+  
+  .MuiTableCell-head {
+    background-color: #f1f1f1;
+    font-weight: bold;
+  }
+  
+  .MuiTableBody-root {
+    background-color: #fff;
+  }
+  
