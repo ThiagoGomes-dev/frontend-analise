@@ -6,6 +6,7 @@ import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import UserList from './components/UserList/UserList';  // Gerenciar Usuários
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

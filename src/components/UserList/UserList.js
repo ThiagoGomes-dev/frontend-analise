@@ -1,25 +1,14 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import { Box, Paper, IconButton, Menu, MenuItem, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import './UserList.css'; // Importando o arquivo CSS
+import React, { useState } from 'react';
+import { Modal, Button, Form, Table } from 'react-bootstrap';
+import { FaTrashAlt, FaEdit } from 'react-icons/fa'; // Usando ícones de lixeira e caneta
+import './UserList.css';
 
 const rows = [
   { id: 1, name: 'Thiago Sousa Gomes', email: 'thiago.gomes@maisunifacisa.com.br', status: 'Ativo' },
   { id: 2, name: 'Bruno Lima', email: 'bruno.lima@gmail.com', status: 'Inativo' },
   { id: 3, name: 'Carlos Pereira', email: 'carlos.pereira@gmail.com', status: 'Ativo' },
   { id: 4, name: 'Santos Carlos', email: 'santos.@gmail.com', status: 'Ativo' },
-  { id: 5, name: 'Daniela Oliveira', email: 'daniela.oliveira@gmail.com', status: 'Ativo' },
-  { id: 6, name: 'Eduardo Martins', email: 'eduardo.martins@gmail.com', status: 'Inativo' },
-  { id: 7, name: 'Fernanda Ribeiro', email: 'fernanda.ribeiro@gmail.com', status: 'Ativo' },
-  { id: 8, name: 'Gustavo Silva', email: 'gustavo.silva@gmail.com', status: 'Inativo' },
-  { id: 9, name: 'Heloisa Santos', email: 'heloisa.santos@gmail.com', status: 'Ativo' },
-  { id: 10, name: 'Igor Ferreira', email: 'igor.ferreira@gmail.com', status: 'Ativo' },
-  { id: 11, name: 'Juliana Costa', email: 'juliana.costa@gmail.com', status: 'Inativo' },
-  { id: 12, name: 'Karla Mendes', email: 'karla.mendes@gmail.com', status: 'Ativo' },
-  { id: 13, name: 'Lucas Almeida', email: 'lucas.almeida@gmail.com', status: 'Ativo' },
-  { id: 14, name: 'Maria Fernanda', email: 'maria.fernanda@gmail.com', status: 'Inativo' },
-  { id: 15, name: 'Nicolas Oliveira', email: 'nicolas.oliveira@gmail.com', status: 'Ativo' }
+  // Adicione os outros usuários aqui
 ];
 
 const headCells = [
@@ -30,138 +19,136 @@ const headCells = [
   { id: 'actions', label: 'Ações' },
 ];
 
-function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } = props;
+function UserList() {
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [currentUser, setCurrentUser] = useState({ id: '', name: '', email: '', status: '' });
 
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        {headCells.map((headCell) => (
-          <TableCell key={headCell.id} align={'left'} sortDirection={orderBy === headCell.id ? order : false}>
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-};
-
-export default function UserList() {
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('id');
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [currentUserId, setCurrentUserId] = React.useState(null);
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const handleClickMenu = (event, id) => {
-    setAnchorEl(event.currentTarget);
-    setCurrentUserId(id);
-  };
-
-  const handleCloseMenu = () => {
-    setAnchorEl(null);
-  };
-
-  const handleEdit = () => {
-    alert(`Editando usuário com ID: ${currentUserId}`);
-    handleCloseMenu();
+  const handleSave = () => {
+    alert(`Dados de usuário com ID ${currentUser.id} atualizados!`);
+    setOpenEditModal(false);
   };
 
   const handleDelete = () => {
-    alert(`Excluindo usuário com ID: ${currentUserId}`);
-    handleCloseMenu();
+    alert(`Excluindo usuário com ID: ${currentUser.id}`);
+    setOpenDeleteModal(false); // Fechar o modal de exclusão após a confirmação
+  };
+
+  const handleMenuClick = (user, action) => {
+    setCurrentUser(user); // Preenche os dados do usuário para edição/exclusão
+    if (action === 'edit') {
+      setOpenEditModal(true); // Abre o modal de edição
+    } else if (action === 'delete') {
+      setOpenDeleteModal(true); // Abre o modal de exclusão
+    }
   };
 
   return (
-    <Box className="user-list-container">
+    <div className="container mt-4">
       <h2>Gerenciar Usuários</h2>
-      <div className="header">
+      <div className="d-flex justify-content-between mb-4">
         <input type="text" placeholder="Procurar Usuários" className="search-input" />
-        <button className="btn-cadastrar">Adicionar Usuário</button>
+        <Button className="btn-cadastrar">Adicionar Usuário</Button>
       </div>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-            <EnhancedTableHead order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
-            <TableBody>
-              {rows
-                .sort((a, b) => (order === 'desc' ? a[orderBy] < b[orderBy] : a[orderBy] > b[orderBy]) ? 1 : -1)
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow hover key={row.id}>
-                      <TableCell>{row.id}</TableCell>
-                      <TableCell>{row.name}</TableCell>
-                      <TableCell>{row.email}</TableCell>
-                      <TableCell>{row.status}</TableCell>
-                      <TableCell>
-                        <IconButton
-                          aria-controls="simple-menu"
-                          aria-haspopup="true"
-                          onClick={(e) => handleClickMenu(e, row.id)}
-                        >
-                          <MoreVertIcon />
-                        </IconButton>
-                        <Menu
-                          id="simple-menu"
-                          anchorEl={anchorEl}
-                          keepMounted
-                          open={Boolean(anchorEl) && currentUserId === row.id}
-                          onClose={handleCloseMenu}
-                        >
-                          <MenuItem onClick={handleEdit}>Editar</MenuItem>
-                          <MenuItem onClick={handleDelete}>Excluir</MenuItem>
-                        </Menu>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          labelRowsPerPage="Linhas por Páginas"
-        />
-      </Paper>
-    </Box>
+
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            {headCells.map((headCell) => (
+              <th key={headCell.id}>{headCell.label}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.id}>
+              <td>{row.id}</td>
+              <td>{row.name}</td>
+              <td>{row.email}</td>
+              <td>{row.status}</td>
+              <td>
+                {/* Botões de Editar e Excluir */}
+                <div className="action-icons">
+                  <Button variant="link" onClick={() => handleMenuClick(row, 'edit')}>
+                    <FaEdit /> {/* Ícone de editar */}
+                  </Button>
+                  <Button variant="link" onClick={() => handleMenuClick(row, 'delete')}>
+                    <FaTrashAlt /> {/* Ícone de excluir */}
+                  </Button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+
+      {/* Modal de edição */}
+      <Modal show={openEditModal} onHide={() => setOpenEditModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Editar Usuário</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formName">
+              <Form.Label>Nome</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Nome"
+                value={currentUser.name}
+                onChange={(e) => setCurrentUser({ ...currentUser, name: e.target.value })}
+              />
+            </Form.Group>
+            <Form.Group controlId="formEmail">
+              <Form.Label>E-mail</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Email"
+                value={currentUser.email}
+                onChange={(e) => setCurrentUser({ ...currentUser, email: e.target.value })}
+              />
+            </Form.Group>
+            <Form.Group controlId="formStatus">
+              <Form.Label>Status</Form.Label>
+              <Form.Control
+                as="select"
+                value={currentUser.status}
+                onChange={(e) => setCurrentUser({ ...currentUser, status: e.target.value })}
+              >
+                <option>Ativo</option>
+                <option>Inativo</option>
+              </Form.Control>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer className="modal-footer">
+          <Button className="cancel-btn" onClick={() => setOpenEditModal(false)}>
+            Cancelar
+          </Button>
+          <Button className="confirm-btn" onClick={handleSave}>
+            Salvar alterações
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal de confirmação de exclusão */}
+      <Modal show={openDeleteModal} onHide={() => setOpenDeleteModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Exclusão</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Tem certeza que deseja excluir o usuário {currentUser.name}?</p>
+        </Modal.Body>
+        <Modal.Footer className="modal-footer">
+          <Button className="cancel-btn" onClick={() => setOpenDeleteModal(false)}>
+            Cancelar
+          </Button>
+          <Button className="confirm-btn" onClick={handleDelete}>
+            Confirmar Exclusão
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
   );
 }
+
+export default UserList;
