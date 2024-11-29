@@ -1,54 +1,53 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Table } from 'react-bootstrap';
-import { FaTrashAlt, FaEdit } from 'react-icons/fa'; // Usando ícones de lixeira e caneta
-import './UserList.css';
+import { FaTrashAlt, FaEdit } from 'react-icons/fa';
+import './CompanyList.css';
 
 const rows = [
-  { id: 1, name: 'Thiago Sousa Gomes', email: 'thiago.gomes@maisunifacisa.com.br', status: 'Ativo' },
-  { id: 2, name: 'Bruno Lima', email: 'bruno.lima@gmail.com', status: 'Inativo' },
-  { id: 3, name: 'Carlos Pereira', email: 'carlos.pereira@gmail.com', status: 'Ativo' },
-  { id: 4, name: 'Santos Carlos', email: 'santos.@gmail.com', status: 'Ativo' },
-  // Adicione os outros usuários aqui
+  { id: 1, cnpj: '12.345.678/0001-90', razaoSocial: 'Empresa A', email: 'empresaA@exemplo.com' },
+  { id: 2, cnpj: '98.765.432/0001-01', razaoSocial: 'Empresa B', email: 'empresaB@exemplo.com' },
+  { id: 3, cnpj: '45.678.123/0001-87', razaoSocial: 'Empresa C', email: 'empresaC@exemplo.com' },
+  { id: 4, cnpj: '23.456.789/0001-02', razaoSocial: 'Empresa D', email: 'empresaD@exemplo.com' },
 ];
 
 const headCells = [
   { id: 'id', label: 'ID' },
-  { id: 'name', label: 'Nome' },
+  { id: 'cnpj', label: 'CNPJ' },
+  { id: 'razaoSocial', label: 'Razão Social' },
   { id: 'email', label: 'E-mail' },
-  { id: 'status', label: 'Status' },
   { id: 'actions', label: 'Ações' },
 ];
 
-function UserList() {
+function CompanyList() {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [currentUser, setCurrentUser] = useState({ id: '', name: '', email: '', status: '' });
+  const [currentCompany, setCurrentCompany] = useState({ id: '', cnpj: '', razaoSocial: '', email: '' });
 
   const handleSave = () => {
-    alert(`Dados de usuário com ID ${currentUser.id} atualizados!`);
+    alert(`Dados da empresa com ID ${currentCompany.id} atualizados!`);
     setOpenEditModal(false);
   };
 
   const handleDelete = () => {
-    alert(`Excluindo usuário com ID: ${currentUser.id}`);
-    setOpenDeleteModal(false); // Fechar o modal de exclusão após a confirmação
+    alert(`Excluindo empresa com ID: ${currentCompany.id}`);
+    setOpenDeleteModal(false);
   };
 
-  const handleMenuClick = (user, action) => {
-    setCurrentUser(user);
+  const handleMenuClick = (company, action) => {
+    setCurrentCompany(company);
     if (action === 'edit') {
-      setOpenEditModal(true); 
+      setOpenEditModal(true);
     } else if (action === 'delete') {
-      setOpenDeleteModal(true); 
+      setOpenDeleteModal(true);
     }
   };
 
   return (
     <div className="container mt-4">
-      <h2>Gerenciar Usuários</h2>
+      <h2>Gerenciar Empresas</h2>
       <div className="d-flex justify-content-between mb-4">
-        <input type="text" placeholder="Procurar Usuários" className="search-input" />
-        <Button className="btn-cadastrar">Adicionar Usuário</Button>
+        <input type="text" placeholder="Procurar Empresas" className="search-input" />
+        <Button className="btn-cadastrar">Adicionar Empresa</Button>
       </div>
 
       <Table striped bordered hover>
@@ -63,9 +62,9 @@ function UserList() {
           {rows.map((row) => (
             <tr key={row.id}>
               <td>{row.id}</td>
-              <td>{row.name}</td>
+              <td>{row.cnpj}</td>
+              <td>{row.razaoSocial}</td>
               <td>{row.email}</td>
-              <td>{row.status}</td>
               <td>
                 {/* Botões de Editar e Excluir */}
                 <div className="action-icons">
@@ -85,42 +84,40 @@ function UserList() {
       {/* Modal de edição */}
       <Modal show={openEditModal} onHide={() => setOpenEditModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Editar Usuário</Modal.Title>
+          <Modal.Title>Editar Empresa</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formName">
-              <Form.Label>Nome</Form.Label>
+            <Form.Group controlId="formCNPJ">
+              <Form.Label>CNPJ</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Nome"
-                value={currentUser.name}
-                onChange={(e) => setCurrentUser({ ...currentUser, name: e.target.value })}
+                placeholder="CNPJ"
+                value={currentCompany.cnpj}
+                onChange={(e) => setCurrentCompany({ ...currentCompany, cnpj: e.target.value })}
+              />
+            </Form.Group>
+            <Form.Group controlId="formRazaoSocial">
+              <Form.Label>Razão Social</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Razão Social"
+                value={currentCompany.razaoSocial}
+                onChange={(e) => setCurrentCompany({ ...currentCompany, razaoSocial: e.target.value })}
               />
             </Form.Group>
             <Form.Group controlId="formEmail">
               <Form.Label>E-mail</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="Email"
-                value={currentUser.email}
-                onChange={(e) => setCurrentUser({ ...currentUser, email: e.target.value })}
+                placeholder="E-mail"
+                value={currentCompany.email}
+                onChange={(e) => setCurrentCompany({ ...currentCompany, email: e.target.value })}
               />
-            </Form.Group>
-            <Form.Group controlId="formStatus">
-              <Form.Label>Status</Form.Label>
-              <Form.Control
-                as="select"
-                value={currentUser.status}
-                onChange={(e) => setCurrentUser({ ...currentUser, status: e.target.value })}
-              >
-                <option>Ativo</option>
-                <option>Inativo</option>
-              </Form.Control>
             </Form.Group>
           </Form>
         </Modal.Body>
-        <Modal.Footer className="modal-footer">
+        <Modal.Footer className="tela-editar">
           <Button className="cancelar-btn" onClick={() => setOpenEditModal(false)}>
             Cancelar
           </Button>
@@ -136,7 +133,7 @@ function UserList() {
           <Modal.Title>Confirmar Exclusão</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Tem certeza que deseja excluir o usuário {currentUser.name}?</p>
+          <p>Tem certeza que deseja excluir a empresa {currentCompany.razaoSocial}?</p>
         </Modal.Body>
         <Modal.Footer className="modal-footer">
           <Button className="cancelar-btn" onClick={() => setOpenDeleteModal(false)}>
@@ -151,4 +148,4 @@ function UserList() {
   );
 }
 
-export default UserList;
+export default CompanyList;

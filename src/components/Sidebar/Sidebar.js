@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaUser, FaTachometerAlt, FaCog, FaFileAlt } from 'react-icons/fa'; 
+import { FaUser, FaTachometerAlt, FaCog, FaFileAlt, FaBuilding } from 'react-icons/fa'; 
 import './Sidebar.css';  // O arquivo de CSS que você já tem
 import { Outlet } from 'react-router-dom';  // Importando o Outlet
 
@@ -31,10 +31,18 @@ const Sidebar = () => {
           </li>
           <li>
             <Link 
-              to="/users" 
-              className={`d-flex align-items-center py-2 ${location.pathname === '/users' ? 'active' : ''}`}
+              to="/usuarios" 
+              className={`d-flex align-items-center py-2 ${location.pathname === '/usuarios' ? 'active' : ''}`}
             >
               <FaUser className="me-2" /> Gerenciar Usuários
+            </Link>
+          </li>
+          <li>
+            <Link 
+              to="/empresas" 
+              className={`d-flex align-items-center py-2 ${location.pathname === '/empresas' ? 'active' : ''}`}
+            >
+              <FaBuilding className="me-2" /> Gerenciar Empresas
             </Link>
           </li>
           <li>
